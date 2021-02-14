@@ -1,6 +1,8 @@
-from input import Get
-from input import input_to
+import input as abc
 
 #print("anbf")
-#a=Get.__call__()
-c=input()
+abc.Get.__call__
+inp=input()
+# print(inp)
+# abc.input_to(inp)
+print(inp)
