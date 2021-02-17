@@ -4,25 +4,36 @@ from colorama import Fore, Back, Style
 import grid as grid
 import global_var
 import paddle
+import time
+import ball
+import brick
 
 colorama.init()
 if __name__ == "__main__":
+    padd=paddle.paddle()
+    ball=ball.Ball()
+    wb=brick.Brick()
     while (1):
         obj=abc.Get()
         inp=abc.input_to(obj)
-        padd=paddle.paddle()
-        #global_var.display(global_var.height, global_var.width)
         padd.clear()
+        ball.clear()
+        wb.clear()
+        if inp != None:
+            time.sleep(0.05)
         if inp=='q':
             break
         if inp=='d':
-            # print("aaa")
-            padd.updatemid(1)
+            padd.updatemid(2)
         if inp=='a':
-            padd.updatemid(-1)
-        
-        #print(global_var.paddle_mid)
-        #paddle.render()
+            padd.updatemid(-2)
+        ball.ball_wall()
+        ball.ball_paddle()
         padd.render()
+        ball.render()
+        ball.lost()
+        wb.render()
+        if(global_var.over):
+            break
         global_var.display.render()
-        #print(inp)
+    print("GAME OVER!")
