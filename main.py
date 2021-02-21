@@ -94,10 +94,13 @@ if __name__ == "__main__":
                 i.render()
                 i.magichappen()
                 i.killpower()
-            if(global_var.expolosion==1):
-                for i in bricksarray:
-                    if i.x>=7 and i.y>=36 and i.y <=66:
-                        i.strength=0
+            # if(global_var.expolosion==1):
+            for i in bricksarray:
+                if global_var.expolosion==1 and i.expo==1:
+                    for j in bricksarray:
+                        if abs(j.x-i.x)<=2 and abs(i.y-j.y)<=5:
+                            j.strength=0
+                    # i.expo=0
             ball.updatevar()
             ball.ball_wall()
             ball.ball_paddle()
