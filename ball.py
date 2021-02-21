@@ -13,6 +13,10 @@ class Ball:
         self.yvel=1
     def render(self):
         # print(self.xvel)
+        if self.ypos + self.yvel >= global_var.width or self.ypos + self.yvel <= 0:
+            self.yvel*=-1
+        if self.xpos + self.xvel<0:
+            self.xvel*=-1
         self.xpos+=self.xvel
         self.ypos+=self.yvel
         global_var.display.grid[self.xpos][self.ypos]=Fore.YELLOW+'@'

@@ -9,11 +9,9 @@ class Brick:
         self.strength=1
         # self.x=x
         # self.y=y
-    def abc(self):
-        print(self.x)
     def render(self):
-        if self.strength==0:
-            color=' '
+        if self.strength<=0:
+            color=' '+ Back.BLACK+ Fore.BLACK
         elif self.strength==1:
             color='H'+ Back.BLACK+Fore.WHITE
         elif self.strength==2:

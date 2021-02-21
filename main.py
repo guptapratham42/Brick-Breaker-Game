@@ -29,29 +29,29 @@ poweruparray=[]
 def init_power():
     for i in range(2):
         x=2*random.randint(1, 4)-1
-        y=5*random.randint(1, 17)+2
+        y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.Powerup(x, y))
     for i in range(2):
         x=2*random.randint(1, 4)-1
-        y=5*random.randint(1, 17)+2
+        y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.shrink(x, y))
     for i in range(2):
         x=2*random.randint(1, 4)-1
-        y=5*random.randint(1, 17)+2
+        y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.multiply(x, y))
     for i in range(2):
         x=2*random.randint(1, 4)-1
-        y=5*random.randint(1, 17)+2
+        y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.fast(x, y))
     for i in range(2):
         x=2*random.randint(1, 4)-1
-        y=5*random.randint(1, 17)+2
+        y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.thru(x, y))
     for i in range(2):
         x=2*random.randint(1, 4)-1
-        y=5*random.randint(1, 17)+2
+        y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.grab(x, y))
-
+poweruparray.append(powerup.fast(7, 66))
 colorama.init()
 starttime=time.time()
 if __name__ == "__main__":
@@ -81,9 +81,13 @@ if __name__ == "__main__":
             for i in bricksarray:
                 i.render()
                 i.brick_ball()
+                for j in poweruparray:
+                    if j.x==i.x and j.y==i.y and i.strength==0:
+                        j.dropstart()
             for i in poweruparray:
+                # i.dropstart()
                 i.render()
-                # print(i.x)
+                i.magichappen()
             ball.updatevar()
             ball.ball_wall()
             ball.ball_paddle()
@@ -92,7 +96,10 @@ if __name__ == "__main__":
             # powe.dropstart()
             # powe.render()
             print("No of lives remaining: {}  Score: {}  Time played: {}".format(global_var.over, global_var.score, round(time.time()-starttime, 3)))
+            print(global_var.paddle_length)
             if(global_var.over==0):
                 break
             global_var.display.render()
+            for i in poweruparray:
+                i.clear()
     print("GAME OVER!")
