@@ -34,7 +34,8 @@ class Brick:
             low_col*=(self.x+1-global_var.ball_x)
             low_col+=global_var.ball_y
             if (((low_col)>=self.y) and ((low_col)<=self.y+4) and (self.x+1<=global_var.ball_x) and (self.x+1>=global_var.ball_x+global_var.ball_velx)):
-                global_var.ball_velx*=-1
+                if (global_var.thru!=0):
+                    global_var.ball_velx*=-1
                 self.strength-=1
                 global_var.score+=10
 
@@ -43,7 +44,8 @@ class Brick:
             upp_col*=(self.x-global_var.ball_x)
             upp_col+=global_var.ball_y 
             if (((upp_col)>=self.y) and ((upp_col)<=self.y+4) and (self.x>=global_var.ball_x) and (self.x<=global_var.ball_x+global_var.ball_velx)):
-                global_var.ball_velx*=-1
+                if(global_var.thru!=0):
+                    global_var.ball_velx*=-1
                 self.strength-=1
                 global_var.score+=10
 
@@ -53,7 +55,8 @@ class Brick:
                 lef_col*=(self.y-global_var.ball_y)
                 lef_col+=global_var.ball_x
                 if (((lef_col)>=self.x) and ((lef_col)<=self.x+1) and (self.y>=global_var.ball_y) and (self.y<=global_var.ball_y+global_var.ball_vely)):
-                    global_var.ball_vely*=-1
+                    if(global_var.thru!=0):
+                        global_var.ball_vely*=-1
                     self.strength-=1
                     global_var.score+=10
 
@@ -63,7 +66,8 @@ class Brick:
                 rig_col*=(self.y+4-global_var.ball_y)
                 rig_col+=global_var.ball_x
                 if (((rig_col)>=self.x) and ((rig_col)<=self.x+1) and (self.y+4<=global_var.ball_y) and (self.y+4>=global_var.ball_y+global_var.ball_vely)):
-                    global_var.ball_vely*=-1
+                    if(global_var.thru!=0):
+                        global_var.ball_vely*=-1
                     self.strength-=1
                     global_var.score+=10
             

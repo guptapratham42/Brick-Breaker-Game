@@ -14,3 +14,4 @@ ball_y=50
 ball_velx=-1
 ball_vely=1
 over=500
+thru=1

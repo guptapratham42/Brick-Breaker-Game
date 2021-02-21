@@ -61,9 +61,11 @@ class fast(Powerup):
         self.y=y
         self.display=0
         self.magic=0
-        global_var.ball_vely=global_var.ball_vely*2
-        a=ball.Ball()
-        a.updatevar()
+    def magichappen(self):
+        if self.magic==1:
+            global_var.ball_vely=global_var.ball_vely*2
+            a=ball.Ball()
+            a.updatevar()
 
 class thru(Powerup):
     def __init__(self, x, y):
@@ -72,6 +74,9 @@ class thru(Powerup):
         self.y=y
         self.display=0
         self.magic=0
+    def magichappen(self):
+        if self.magic==1:
+            global_var.thru=0
 
 class grab(Powerup):
     def __init__(self, x, y):

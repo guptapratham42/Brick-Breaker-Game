@@ -51,7 +51,7 @@ def init_power():
         x=2*random.randint(1, 4)-1
         y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.grab(x, y))
-poweruparray.append(powerup.fast(7, 66))
+poweruparray.append(powerup.thru(7, 66))
 colorama.init()
 starttime=time.time()
 if __name__ == "__main__":
