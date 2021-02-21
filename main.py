@@ -24,6 +24,8 @@ def initial_bricks():
     for i in range(3, 8 ,4):
         for j in range(6, 90, 10):
             bricksarray.append(brick.green_brick(i, j))
+    for j in range(36, 66, 5):
+        bricksarray.append(brick.explosive_brick(9, j))
 
 poweruparray=[]
 def init_power():
@@ -51,7 +53,7 @@ def init_power():
         x=2*random.randint(1, 4)-1
         y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.grab(x, y))
-poweruparray.append(powerup.shrink(7, 66))
+# poweruparray.append(powerup.shrink(7, 66))
 colorama.init()
 starttime=time.time()
 if __name__ == "__main__":
@@ -61,6 +63,7 @@ if __name__ == "__main__":
     init_power()
     # powe=powerup.Powerup(18, 50)
     while (1):
+        # print(time.time())
         # print(xpower)
         obj=abc.Get()
         inp=abc.input_to(obj)
@@ -91,6 +94,10 @@ if __name__ == "__main__":
                 i.render()
                 i.magichappen()
                 i.killpower()
+            if(global_var.expolosion==1):
+                for i in bricksarray:
+                    if i.x>=7 and i.y>=36 and i.y <=66:
+                        i.strength=0
             ball.updatevar()
             ball.ball_wall()
             ball.ball_paddle()
@@ -99,7 +106,7 @@ if __name__ == "__main__":
             # powe.dropstart()
             # powe.render()
             print("No of lives remaining: {}  Score: {}  Time played: {}".format(global_var.over, global_var.score, round(time.time()-starttime, 3)))
-            print(global_var.paddle_length)
+            # print(global_var.paddle_length)
             if(global_var.over==0):
                 break
             global_var.display.render()

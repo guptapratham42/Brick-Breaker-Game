@@ -7,13 +7,16 @@ colorama.init()
 class Brick:
     def __init__(self):
         self.strength=1
+        self.expo=0
         # self.x=x
         # self.y=y
     def render(self):
         if self.strength<=0:
             color=' '+ Back.BLACK+ Fore.BLACK
+        elif self.strength==1 and self.expo==1:
+            color='H'+ Back.BLACK+Fore.CYAN
         elif self.strength==1:
-            color='H'+ Back.BLACK+Fore.WHITE
+            color='H'+Back.BLACK+Fore.WHITE
         elif self.strength==2:
             color='H'+ Back.BLACK+Fore.YELLOW
         elif self.strength==3:
@@ -74,27 +77,40 @@ class Brick:
             #updation
             a=ball.Ball()
             a.updatevar()
+            if (self.strength==0 and self.expo==1):
+                global_var.expolosion=1
 
 class white_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.expo=0
         self.strength=1
 
 class yellow_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.expo=0
         self.strength=2
 
 class green_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.expo=0
         self.strength=3
 
 class unbreak_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.expo=0
         self.strength=1000
+
+class explosive_brick(Brick):
+    def __init__(self, x, y):
+        self.x=x
+        self.y=y
+        self.strength=1
+        self.expo=1
