@@ -7,6 +7,8 @@ import paddle
 import time
 import ball
 import brick
+import powerup
+import random
 
 bricksarray=[]
 def initial_bricks():
@@ -22,12 +24,44 @@ def initial_bricks():
     for i in range(3, 8 ,4):
         for j in range(6, 90, 10):
             bricksarray.append(brick.green_brick(i, j))
+
+poweruparray=[]
+def init_power():
+    for i in range(2):
+        x=2*random.randint(1, 4)-1
+        y=5*random.randint(1, 17)+2
+        poweruparray.append(powerup.Powerup(x, y))
+    for i in range(2):
+        x=2*random.randint(1, 4)-1
+        y=5*random.randint(1, 17)+2
+        poweruparray.append(powerup.shrink(x, y))
+    for i in range(2):
+        x=2*random.randint(1, 4)-1
+        y=5*random.randint(1, 17)+2
+        poweruparray.append(powerup.multiply(x, y))
+    for i in range(2):
+        x=2*random.randint(1, 4)-1
+        y=5*random.randint(1, 17)+2
+        poweruparray.append(powerup.fast(x, y))
+    for i in range(2):
+        x=2*random.randint(1, 4)-1
+        y=5*random.randint(1, 17)+2
+        poweruparray.append(powerup.thru(x, y))
+    for i in range(2):
+        x=2*random.randint(1, 4)-1
+        y=5*random.randint(1, 17)+2
+        poweruparray.append(powerup.grab(x, y))
+
 colorama.init()
+starttime=time.time()
 if __name__ == "__main__":
     padd=paddle.paddle()
     ball=ball.Ball()
     initial_bricks()
+    init_power()
+    # powe=powerup.Powerup(18, 50)
     while (1):
+        # print(xpower)
         obj=abc.Get()
         inp=abc.input_to(obj)
         if inp == 'p':
@@ -47,12 +81,17 @@ if __name__ == "__main__":
             for i in bricksarray:
                 i.render()
                 i.brick_ball()
+            for i in poweruparray:
+                i.render()
+                # print(i.x)
             ball.updatevar()
             ball.ball_wall()
             ball.ball_paddle()
             ball.lost()
             ball.render()
-            print(global_var.over)
+            # powe.dropstart()
+            # powe.render()
+            print("No of lives remaining: {}  Score: {}  Time played: {}".format(global_var.over, global_var.score, round(time.time()-starttime, 3)))
             if(global_var.over==0):
                 break
             global_var.display.render()

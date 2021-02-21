@@ -1,6 +1,7 @@
 import grid 
 
 play=1
+score=0
 height= 30
 width= 100
 display=grid.Grid(height, width)

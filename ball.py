@@ -15,7 +15,7 @@ class Ball:
         # print(self.xvel)
         self.xpos+=self.xvel
         self.ypos+=self.yvel
-        global_var.display.grid[self.xpos][self.ypos]="\U0001f600"
+        global_var.display.grid[self.xpos][self.ypos]=Fore.YELLOW+'@'
         global_var.ball_velx=self.xvel
         global_var.ball_vely=self.yvel
         global_var.ball_x=self.xpos
