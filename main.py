@@ -51,7 +51,7 @@ def init_power():
         x=2*random.randint(1, 4)-1
         y=5*random.randint(1, 17)+1
         poweruparray.append(powerup.grab(x, y))
-poweruparray.append(powerup.thru(7, 66))
+poweruparray.append(powerup.shrink(7, 66))
 colorama.init()
 starttime=time.time()
 if __name__ == "__main__":
@@ -67,7 +67,9 @@ if __name__ == "__main__":
         if inp == 'p':
             global_var.play*=-1
         if inp=='q':
-                break
+            break
+        if inp==' ':
+            global_var.grab=0
         if global_var.play==1:
             padd.clear()
             ball.clear()
@@ -88,6 +90,7 @@ if __name__ == "__main__":
                 # i.dropstart()
                 i.render()
                 i.magichappen()
+                i.killpower()
             ball.updatevar()
             ball.ball_wall()
             ball.ball_paddle()

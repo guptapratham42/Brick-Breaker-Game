@@ -17,8 +17,11 @@ class Ball:
             self.yvel*=-1
         if self.xpos + self.xvel<0:
             self.xvel*=-1
-        self.xpos+=self.xvel
-        self.ypos+=self.yvel
+        if global_var.grab==1 and self.xpos>=27:
+            self.ypos=global_var.paddle_mid
+        else:
+            self.xpos+=self.xvel
+            self.ypos+=self.yvel
         global_var.display.grid[self.xpos][self.ypos]=Fore.YELLOW+'@'
         global_var.ball_velx=self.xvel
         global_var.ball_vely=self.yvel
@@ -45,7 +48,8 @@ class Ball:
             global_var.paddle_mid=50
             a=paddle.paddle()
             # a.updatemid(0)
-            global_var.play=-1
+            # global_var.play=-1
+            global_var.grab=1
             # a.clear()
             # a.render()
     def updatevar(self):

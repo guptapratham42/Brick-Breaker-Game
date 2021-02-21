@@ -15,3 +15,4 @@ ball_velx=-1
 ball_vely=1
 over=500
 thru=1
+grab=1
