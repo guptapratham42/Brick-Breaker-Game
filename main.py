@@ -140,6 +140,7 @@ if __name__ == "__main__":
                         j.dropstart()
             for i in poweruparray:
                 # i.dropstart()
+                i.powerup_wall()
                 i.render()
                 i.magichappen()
                 i.killpower()

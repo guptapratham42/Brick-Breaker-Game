@@ -3,6 +3,7 @@ import colorama
 import ball
 import time
 import numpy
+import math
 from colorama import Fore, Back, Style
 colorama.init()
 
@@ -14,20 +15,30 @@ class Powerup:
         self.display=0
         self.magic=0
         self.timestart=0
+        self.xvel=1
+        self.yvel=0
+        self.xacc=1
     def render(self):
         if self.display==1:
             global_var.display.grid[self.x][self.y]=self.symbol
-            self.x+=1
-        if self.x>=28:
-            if self.y>=global_var.paddle_start and self.y<=global_var.paddle_end:
+            if(self.xvel%3==1):
+                self.xvel+=self.xacc
+            self.y+=self.yvel
+            # self.xvel=math.floor(self.xvel)
+            self.x+=self.xvel
+        if self.x+self.xvel>=28:
+            if self.y+self.yvel>=global_var.paddle_start and self.y+self.yvel<=global_var.paddle_end:
                 self.magic=1
                 self.timestart=time.time()
             global_var.display.grid[self.x-1][self.y]=' '
             self.display=0
             self.x=0
+            self.y=0
         if time.time()-self.timestart>10:
             self.magic=0
     def dropstart(self):
+        self.xvel=global_var.ball_velx
+        self.yvel=global_var.ball_vely
         self.display=1
     def drop_with_brick(self):
         self.x+=1
@@ -45,12 +56,16 @@ class Powerup:
             global_var.paddle_start+=1
     def clear(self):
         global_var.display.grid[self.x-1][self.y]=' '
+    def powerup_wall(self):
+        if self.y + self.yvel >= global_var.width or self.y + self.yvel <= 0:
+            self.yvel*=-1
+        if self.x + self.xvel<0:
+            self.xvel*=-1
 
 class shrink(Powerup):
     def __init__(self, x, y):
+        super().__init__(x, y)
         self.symbol=Fore.WHITE+'S'
-        self.x=x
-        self.y=y
         self.display=0
         self.magic=0
         self.timestart=0
@@ -69,9 +84,8 @@ class shrink(Powerup):
 
 class multiply(Powerup):
     def __init__(self, x, y):
+        super().__init__(x, y)
         self.symbol=Fore.WHITE+'M'
-        self.x=x
-        self.y=y
         self.display=0
         self.magic=0
         self.timestart=0
@@ -80,9 +94,8 @@ class multiply(Powerup):
 
 class fast(Powerup):
     def __init__(self, x, y):
+        super().__init__(x, y)
         self.symbol=Fore.WHITE+'F'
-        self.x=x
-        self.y=y
         self.display=0
         self.magic=0
         self.timestart=0
@@ -101,9 +114,8 @@ class fast(Powerup):
 
 class thru(Powerup):
     def __init__(self, x, y):
+        super().__init__(x, y)
         self.symbol=Fore.WHITE+'T'
-        self.x=x
-        self.y=y
         self.display=0
         self.magic=0
         self.timestart=0
@@ -118,9 +130,8 @@ class thru(Powerup):
 
 class grab(Powerup):
     def __init__(self, x, y):
+        super().__init__(x, y)
         self.symbol=Fore.WHITE+'G'
-        self.x=x
-        self.y=y
         self.display=0
         self.magic=0
         self.timestart=0
