@@ -9,6 +9,8 @@ class Brick:
     def __init__(self):
         self.strength=1
         self.expo=0
+        self.rainbow=0
+        self.contact=0
         # self.x=x
         # self.y=y
     def render(self):
@@ -148,3 +150,72 @@ class rainbow_brick(Brick):
         self.expo=0
         self.strength=1
         self.rainbow=1
+
+class ufo(Brick):
+    def __init__(self):
+        super().__init__()
+        self.x=1
+        self.y=global_var.paddle_start
+        self.padd_mat=([[ Fore.MAGENTA + "F" for i in range(global_var.paddle_length)] for j in range(3)])
+        self.strength=10
+    def render(self):
+        self.y=global_var.paddle_start
+        self.padd_mat=([[ Fore.MAGENTA + "F" for i in range(global_var.paddle_length)] for j in range(3)])
+        for i in range(3):
+            for j in range(global_var.paddle_length):
+                global_var.display.grid[i+1][global_var.paddle_mid-int(global_var.paddle_length/2)+j]=self.padd_mat[i][j]
+    def clear(self):
+        for i in range(3):
+            for j in range(global_var.width):
+                global_var.display.grid[i+1][j]=' '
+    def brick_ball(self):
+        if(self.strength>0):
+            # Lower side collision handle
+            low_col=global_var.ball_vely/global_var.ball_velx
+            low_col*=(self.x+2-global_var.ball_x)
+            low_col+=global_var.ball_y
+            if (((low_col)>=self.y) and ((low_col)<=self.y+global_var.paddle_length-1) and (self.x+2<=global_var.ball_x) and (self.x+2>=global_var.ball_x+global_var.ball_velx)):
+                if (global_var.thru!=0):
+                    global_var.ball_velx*=-1
+                self.strength-=1
+                self.contact=1
+                global_var.score+=10
+
+            # upper side collision handle
+            upp_col=global_var.ball_vely/global_var.ball_velx
+            upp_col*=(self.x-global_var.ball_x)
+            upp_col+=global_var.ball_y 
+            if (((upp_col)>=self.y) and ((upp_col)<=self.y+global_var.paddle_length-1) and (self.x>=global_var.ball_x) and (self.x<=global_var.ball_x+global_var.ball_velx)):
+                if(global_var.thru!=0):
+                    global_var.ball_velx*=-1
+                self.strength-=1
+                self.contact=1
+                global_var.score+=10
+
+            # left side collision handle
+            if global_var.ball_vely!=0:
+                lef_col=global_var.ball_velx/global_var.ball_vely
+                lef_col*=(self.y-global_var.ball_y)
+                lef_col+=global_var.ball_x
+                if (((lef_col)>=self.x) and ((lef_col)<=self.x+2) and (self.y>=global_var.ball_y) and (self.y<=global_var.ball_y+global_var.ball_vely)):
+                    if(global_var.thru!=0):
+                        global_var.ball_vely*=-1
+                    self.strength-=1
+                    self.contact=1
+                    global_var.score+=10
+
+            # right side collision handle
+            if global_var.ball_vely!=0:
+                rig_col=global_var.ball_velx/global_var.ball_vely
+                rig_col*=(self.y+global_var.paddle_length-global_var.ball_y)
+                rig_col+=global_var.ball_x
+                if (((rig_col)>=self.x) and ((rig_col)<=self.x+2) and (self.y+global_var.paddle_length<=global_var.ball_y) and (self.y+global_var.paddle_length>=global_var.ball_y+global_var.ball_vely)):
+                    if(global_var.thru!=0):
+                        global_var.ball_vely*=-1
+                    self.strength-=1
+                    self.contact=1
+                    global_var.score+=10
+            
+            #updation
+            a=ball.Ball()
+            a.updatevar()

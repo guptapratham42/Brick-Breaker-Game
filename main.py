@@ -9,6 +9,7 @@ import ball
 import brick
 import powerup
 import random
+import ufo
 
 levelarray=[]
 levelarray.append([])
@@ -47,20 +48,23 @@ def initial_bricks():
         bricksarray.append(brick.explosive_brick(7, j))
     levelarray.append(bricksarray)
     bricksarray=[]
-    for i in range(21, 6 ,4):
-        for j in range(6, 90, 10):
+    # for i in range(21, 6 ,4):
+    #     for j in range(6, 90, 10):
+    #         bricksarray.append(brick.unbreak_brick(i, j))
+    # for i in range(3, 6 ,4):
+    #     for j in range(11, 90, 10):
+    #         bricksarray.append(brick.unbreak_brick(i, j))
+    # ufo=ufo.ufo
+    # ufo.__init__()
+    bricksarray.append(brick.ufo())
+    for i in range(9, 10 ,4):
+        for j in range(7, 90, 10):
             bricksarray.append(brick.unbreak_brick(i, j))
-    for i in range(3, 6 ,4):
-        for j in range(11, 90, 10):
-            bricksarray.append(brick.unbreak_brick(i, j))
-    for i in range(1, 6 ,4):
-        for j in range(11, 90, 10):
-            bricksarray.append(brick.unbreak_brick(i, j))
-    for i in range(3, 6 ,4):
-        for j in range(6, 90, 10):
-            bricksarray.append(brick.unbreak_brick(i, j))
-    for j in range(36, 66, 5):
-        bricksarray.append(brick.explosive_brick(7, j))
+    # for i in range(5, 6 ,4):
+    #     for j in range(6, 90, 10):
+    #         bricksarray.append(brick.unbreak_brick(i, j))
+    # for j in range(36, 66, 5):
+    #     bricksarray.append(brick.explosive_brick(9, j))
     levelarray.append(bricksarray)
 
 poweruparray=[]
@@ -178,6 +182,8 @@ if __name__ == "__main__":
                 global_var.expolosion=0
                 ball.__init__()
             print("No of lives remaining: {}  Score: {}  Time played: {}".format(global_var.over, global_var.score, round(time.time()-starttime, 3)))
+            if global_var.level==3:
+                print("Boss strength :{}".format(levelarray[3][0].strength))
             if(global_var.over==0):
                 break
             global_var.display.render()
