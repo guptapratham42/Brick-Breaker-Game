@@ -18,3 +18,4 @@ thru=1
 grab=1
 expolosion=0
 level=1
+pass_level=0

@@ -38,6 +38,7 @@ class Ball:
         if self.xpos + self.xvel >= 28 and self.ypos>=global_var.paddle_start and self.ypos<=global_var.paddle_end:
             self.xvel*=-1
             self.yvel+=int((self.ypos-global_var.paddle_mid)/2)
+            return True
     def lost(self):
         if self.xpos >=28:
             global_var.over-=1

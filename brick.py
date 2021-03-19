@@ -30,6 +30,12 @@ class Brick:
         for i in range(2):
             for j in range(5):
                 global_var.display.grid[i][j]=' '
+    def drop_brick(self):
+        self.x+=1
+    def fall(self):
+        if self.x+2>=global_var.height-1:
+            global_var.over=0
+            # global_var.level=
     def brick_ball(self):
         if(self.strength>0):
             # Lower side collision handle
