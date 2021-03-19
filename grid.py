@@ -17,3 +17,7 @@ class Grid:
             print()
         #print(self.grid)
         sys.stdout.write("\033c")
+    def clear(self):
+        for i in range(self.height):
+            for j in range(self.width):
+                self.grid[i][j] = ' '

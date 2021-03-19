@@ -10,8 +10,10 @@ import brick
 import powerup
 import random
 
-bricksarray=[]
+levelarray=[]
+levelarray.append([])
 def initial_bricks():
+    bricksarray=[]
     for i in range(1, 6 ,4):
         for j in range(6, 90, 10):
             bricksarray.append(brick.white_brick(i, j))
@@ -26,6 +28,39 @@ def initial_bricks():
             bricksarray.append(brick.green_brick(i, j))
     for j in range(36, 66, 5):
         bricksarray.append(brick.explosive_brick(9, j))
+    levelarray.append(bricksarray)
+    bricksarray=[]
+    for i in range(1, 6 ,4):
+        for j in range(6, 90, 10):
+            bricksarray.append(brick.white_brick(i, j))
+    for i in range(3, 6 ,4):
+        for j in range(11, 90, 10):
+            bricksarray.append(brick.unbreak_brick(i, j))
+    for i in range(1, 6 ,4):
+        for j in range(11, 90, 10):
+            bricksarray.append(brick.yellow_brick(i, j))
+    for i in range(3, 6 ,4):
+        for j in range(6, 90, 10):
+            bricksarray.append(brick.green_brick(i, j))
+    for j in range(36, 66, 5):
+        bricksarray.append(brick.explosive_brick(7, j))
+    levelarray.append(bricksarray)
+    bricksarray=[]
+    for i in range(1, 6 ,4):
+        for j in range(6, 90, 10):
+            bricksarray.append(brick.white_brick(i, j))
+    for i in range(3, 6 ,4):
+        for j in range(11, 90, 10):
+            bricksarray.append(brick.unbreak_brick(i, j))
+    for i in range(1, 6 ,4):
+        for j in range(11, 90, 10):
+            bricksarray.append(brick.yellow_brick(i, j))
+    for i in range(3, 6 ,4):
+        for j in range(6, 90, 10):
+            bricksarray.append(brick.green_brick(i, j))
+    for j in range(36, 66, 5):
+        bricksarray.append(brick.explosive_brick(7, j))
+    levelarray.append(bricksarray)
 
 poweruparray=[]
 def init_power():
@@ -61,14 +96,23 @@ if __name__ == "__main__":
     ball=ball.Ball()
     initial_bricks()
     init_power()
-    # powe=powerup.Powerup(18, 50)
     while (1):
-        # print(time.time())
-        # print(xpower)
         obj=abc.Get()
         inp=abc.input_to(obj)
         if inp == 'p':
             global_var.play*=-1
+        if inp == 'l':
+            global_var.level+=1
+            if global_var.level>=4:
+                break
+            global_var.paddle_mid=50
+            global_var.paddle_start=47
+            global_var.paddle_end=52
+            global_var.paddle_length=25
+            global_var.thru=1
+            global_var.grab=1
+            global_var.expolosion=0
+            ball.__init__()
         if inp=='q':
             break
         if inp==' ':
@@ -83,7 +127,7 @@ if __name__ == "__main__":
             if inp=='a':
                 padd.updatemid(-2)
             padd.render()
-            for i in bricksarray:
+            for i in levelarray[global_var.level]:
                 i.render()
                 i.brick_ball()
                 for j in poweruparray:
@@ -95,9 +139,9 @@ if __name__ == "__main__":
                 i.magichappen()
                 i.killpower()
             # if(global_var.expolosion==1):
-            for i in bricksarray:
+            for i in levelarray[global_var.level]:
                 if global_var.expolosion==1 and i.expo==1:
-                    for j in bricksarray:
+                    for j in levelarray[global_var.level]:
                         if abs(j.x-i.x)<=2 and abs(i.y-j.y)<=5:
                             j.strength=0
                     # i.expo=0
@@ -106,13 +150,13 @@ if __name__ == "__main__":
             ball.ball_paddle()
             ball.lost()
             ball.render()
-            # powe.dropstart()
-            # powe.render()
             print("No of lives remaining: {}  Score: {}  Time played: {}".format(global_var.over, global_var.score, round(time.time()-starttime, 3)))
-            # print(global_var.paddle_length)
             if(global_var.over==0):
                 break
             global_var.display.render()
             for i in poweruparray:
                 i.clear()
+            for i in range(global_var.height):
+                for j in range(global_var.width):
+                    global_var.display.grid[i][j]=' '+Back.BLACK + Fore.BLACK
     print("GAME OVER!")
