@@ -17,7 +17,7 @@ def initial_bricks():
     # bricksarray.append(brick.white_brick(5, 79))
     for i in range(1, 6 ,4):
         for j in range(6, 90, 10):
-            bricksarray.append(brick.white_brick(i, j))
+            bricksarray.append(brick.rainbow_brick(i, j))
     for i in range(3, 8 ,4):
         for j in range(11, 90, 10):
             bricksarray.append(brick.yellow_brick(i, j))
@@ -132,6 +132,7 @@ if __name__ == "__main__":
             padd.render()
             for i in levelarray[global_var.level]:
                 i.fall()
+                i.rainbow_contact()
                 i.render()
                 i.brick_ball()
                 for j in poweruparray:

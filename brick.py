@@ -1,6 +1,7 @@
 import global_var
 import colorama
 import ball
+import random
 from colorama import Fore, Back, Style
 colorama.init()
 
@@ -46,6 +47,7 @@ class Brick:
                 if (global_var.thru!=0):
                     global_var.ball_velx*=-1
                 self.strength-=1
+                self.contact=1
                 global_var.score+=10
 
             # upper side collision handle
@@ -56,6 +58,7 @@ class Brick:
                 if(global_var.thru!=0):
                     global_var.ball_velx*=-1
                 self.strength-=1
+                self.contact=1
                 global_var.score+=10
 
             # left side collision handle
@@ -67,6 +70,7 @@ class Brick:
                     if(global_var.thru!=0):
                         global_var.ball_vely*=-1
                     self.strength-=1
+                    self.contact=1
                     global_var.score+=10
 
             # right side collision handle
@@ -78,6 +82,7 @@ class Brick:
                     if(global_var.thru!=0):
                         global_var.ball_vely*=-1
                     self.strength-=1
+                    self.contact=1
                     global_var.score+=10
             
             #updation
@@ -85,11 +90,17 @@ class Brick:
             a.updatevar()
             if (self.strength==0 and self.expo==1):
                 global_var.expolosion=1
+    def rainbow_contact(self):
+        if self.rainbow == 1 and self.contact==0:
+            self.strength=random.randint(1, 3)
+
 
 class white_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.contact=0
+        self.rainbow=0
         self.expo=0
         self.strength=1
 
@@ -97,6 +108,8 @@ class yellow_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.contact=0
+        self.rainbow=0
         self.expo=0
         self.strength=2
 
@@ -104,6 +117,8 @@ class green_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.contact=0
+        self.rainbow=0
         self.expo=0
         self.strength=3
 
@@ -111,6 +126,8 @@ class unbreak_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.contact=0
+        self.rainbow=0
         self.expo=0
         self.strength=1000
 
@@ -118,5 +135,16 @@ class explosive_brick(Brick):
     def __init__(self, x, y):
         self.x=x
         self.y=y
+        self.contact=0
+        self.rainbow=0
         self.strength=1
         self.expo=1
+
+class rainbow_brick(Brick):
+    def __init__(self, x, y):
+        self.x=x
+        self.y=y
+        self.contact=0
+        self.expo=0
+        self.strength=1
+        self.rainbow=1
