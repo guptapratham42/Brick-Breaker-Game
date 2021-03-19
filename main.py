@@ -155,6 +155,8 @@ if __name__ == "__main__":
             if ball.ball_paddle() and time.time()-leveltime>=5:
                 for i in levelarray[global_var.level]:
                     i.drop_brick()
+                for i in poweruparray:
+                    i.drop_with_brick()
             ball.lost()
             ball.render()
             global_var.pass_level=0

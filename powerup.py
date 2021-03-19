@@ -29,6 +29,8 @@ class Powerup:
             self.magic=0
     def dropstart(self):
         self.display=1
+    def drop_with_brick(self):
+        self.x+=1
     def magichappen(self):
         if global_var.paddle_end<global_var.width-2 and global_var.paddle_start>=1 and self.magic==1:
             global_var.paddle_length+=2
