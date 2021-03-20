@@ -8,8 +8,10 @@ import time
 import ball
 import brick
 import powerup
+import bomb
 import random
-import ufo
+import os
+# import ufo
 
 levelarray=[]
 levelarray.append([])
@@ -97,10 +99,17 @@ def init_power():
 colorama.init()
 starttime=time.time()
 leveltime=time.time()
+bombtime=time.time()
 if __name__ == "__main__":
+    flag=0
     padd=paddle.paddle()
     ball=ball.Ball()
     initial_bricks()
+    # os.system('aplay -q sound1.wav&')
+    bombcount=0
+    bombs=[]
+    for i in range(11):
+        bombs.append(bomb.Bomb())
     init_power()
     while (1):
         obj=abc.Get()
@@ -109,7 +118,9 @@ if __name__ == "__main__":
             global_var.play*=-1
         if inp == 'l':
             global_var.level+=1
+            # os.system('aplay -q ./.wav&')
             leveltime=time.time()
+            bombtime=time.time()
             if global_var.level>=4:
                 break
             global_var.paddle_mid=50
@@ -143,23 +154,26 @@ if __name__ == "__main__":
                     if j.x==i.x and j.y==i.y and i.strength==0:
                         j.dropstart()
             for i in poweruparray:
-                # i.dropstart()
-                i.powerup_wall()
-                i.render()
-                i.magichappen()
-                i.killpower()
+                if global_var.level!=3:
+                    # i.dropstart()
+                    i.powerup_wall()
+                    i.render()
+                    i.magichappen()
+                    i.killpower()
             # if(global_var.expolosion==1):
             for i in levelarray[global_var.level]:
                 if global_var.expolosion==1 and i.expo==1:
                     for j in levelarray[global_var.level]:
                         if abs(j.x-i.x)<=2 and abs(i.y-j.y)<=5:
                             j.strength=0
+                    # os.system('aplay -q ./Explosion.wav&')
                     # i.expo=0
             ball.updatevar()
             ball.ball_wall()
             if ball.ball_paddle() and time.time()-leveltime>=5:
                 for i in levelarray[global_var.level]:
-                    i.drop_brick()
+                    if global_var.level!=3:
+                        i.drop_brick()
                 for i in poweruparray:
                     i.drop_with_brick()
             ball.lost()
@@ -171,6 +185,7 @@ if __name__ == "__main__":
             if global_var.pass_level==0:
                 global_var.level+=1
                 leveltime=time.time()
+                bombtime=time.time()
                 if global_var.level>=4:
                     break
                 global_var.paddle_mid=50
@@ -181,9 +196,36 @@ if __name__ == "__main__":
                 global_var.grab=1
                 global_var.expolosion=0
                 ball.__init__()
+            if global_var.level==3 and time.time()-bombtime>=5:
+                bombs[bombcount].bomb_go()
+                bombcount+=1
+                bombtime=time.time()
+            for i in range(11):
+                bombs[i].render()
+                bombs[i].ball_paddle()
+                bombs[i].lost()
+            if(levelarray[3][0].strength<=7 and flag==0):
+                for i in range(5, 6 ,4):
+                    for j in range(6, 90, 10):
+                        levelarray[3].append(brick.white_brick(i, j))
+                for i in range(5, 6 ,4):
+                    for j in range(11, 90, 10):
+                        levelarray[3].append(brick.yellow_brick(i, j))
+                flag+=1
+            if(levelarray[3][0].strength<=4 and flag==1):
+                for i in range(7, 8 ,4):
+                    for j in range(6, 90, 10):
+                        levelarray[3].append(brick.white_brick(i, j))
+                for i in range(7, 8 ,4):
+                    for j in range(11, 90, 10):
+                        levelarray[3].append(brick.yellow_brick(i, j))
+                flag+=1
             print("No of lives remaining: {}  Score: {}  Time played: {}".format(global_var.over, global_var.score, round(time.time()-starttime, 3)))
             if global_var.level==3:
                 print("Boss strength :{}".format(levelarray[3][0].strength))
+            if levelarray[3][0].strength<=0:
+                global_var.over=0
+                print("Boss defeated")
             if(global_var.over==0):
                 break
             global_var.display.render()
@@ -192,4 +234,6 @@ if __name__ == "__main__":
             for i in range(global_var.height):
                 for j in range(global_var.width):
                     global_var.display.grid[i][j]=' '+Back.BLACK + Fore.BLACK
+            # bomb.clear()
     print("GAME OVER!")
+    os.system('aplay -q ./gameover.wav&')

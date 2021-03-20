@@ -161,6 +161,8 @@ class ufo(Brick):
     def render(self):
         self.y=global_var.paddle_start
         self.padd_mat=([[ Fore.MAGENTA + "F" for i in range(global_var.paddle_length)] for j in range(3)])
+        if self.strength <= 0:
+            self.padd_mat=([[ Fore.BLACK + " " for i in range(global_var.paddle_length)] for j in range(3)])
         for i in range(3):
             for j in range(global_var.paddle_length):
                 global_var.display.grid[i+1][global_var.paddle_mid-int(global_var.paddle_length/2)+j]=self.padd_mat[i][j]

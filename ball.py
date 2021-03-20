@@ -2,6 +2,7 @@
 import global_var
 import colorama
 import paddle
+import os
 from colorama import Fore, Back, Style
 colorama.init()
 
@@ -32,16 +33,20 @@ class Ball:
     def ball_wall(self):
         if self.ypos + self.yvel >= global_var.width or self.ypos + self.yvel <= 0:
             self.yvel*=-1
+            os.system('aplay -q ./wall.wav&')
         if self.xpos + self.xvel<0:
             self.xvel*=-1
+            os.system('aplay -q ./wall.wav&')
     def ball_paddle(self):
         if self.xpos + self.xvel >= 28 and self.ypos>=global_var.paddle_start and self.ypos<=global_var.paddle_end:
             self.xvel*=-1
             self.yvel+=int((self.ypos-global_var.paddle_mid)/2)
+            # os.system('aplay -q ./sound1.wav&')
             return True
     def lost(self):
         if self.xpos >=28:
             global_var.over-=1
+            os.system('aplay -q ./losinglife.wav&')
             self.xpos=27
             self.ypos=50
             self.xvel=-1
